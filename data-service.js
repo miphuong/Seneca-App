@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 
-/*
+
 // Heruo Postgres Connection:
-var sequelize = new Sequelize('d2oonl7bomk6et','frthkwnymubqxq','7cbd858de5091c5d194abeede0f91a9bb7ee7fbac4e403106559dd0abca66f77', {
-    host: 'ec2-54-83-17-151.compute-1.amazonaws.com',
+var sequelize = new Sequelize('de3mftkc6qma2v','dsqowhaxsbagdl','14edb012ce3db049d134e5b31ccc0da8440c4abbeb2a4c015e582e23476caeae', {
+    host: 'ec2-3-211-37-117.compute-1.amazonaws.com',
     dialect: 'postgres',
     operatorAliases: false,
     pool:{
@@ -13,9 +13,9 @@ var sequelize = new Sequelize('d2oonl7bomk6et','frthkwnymubqxq','7cbd858de5091c5
         idle:10000
     }
 });
-*/
 
 
+/*
 // Local Connection:
 var sequelize = new Sequelize('Courses','postgres','a47DxMn3NUBS', {
     host: 'localhost',
@@ -28,7 +28,7 @@ var sequelize = new Sequelize('Courses','postgres','a47DxMn3NUBS', {
         idle:10000
     }
 });
-
+*/
 
 
 //Define Course Model/Table

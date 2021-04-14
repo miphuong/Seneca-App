@@ -56,8 +56,11 @@ app.get('/main', (req, res) => {
     
     dataService.getAll().then((data) => {
         console.log("dataservice.getall fn");
-        //console.log("data1111: ", data)
-        res.render('filter', {data : data, userName : UN});
+
+        // use this to login
+        //res.render('filter', {data : data, userName : UN}); // use this to login
+
+        res.render('filter', {data : data});
         //res.send("/main");
     }).catch((err) => {
         console.log("errrrrrrrrrrr:" , err);
@@ -131,8 +134,12 @@ app.get('/filter/code/:code', (req, res) => {
 })
 
 // Route
+// app.get('/', (req, res) => {
+//     res.render('login');
+// });
+
 app.get('/', (req, res) => {
-    res.render('login');
+    res.redirect('/main');
 });
 
 app.get('/auth/google', 

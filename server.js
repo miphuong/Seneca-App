@@ -61,6 +61,8 @@ app.get('/main', (req, res) => {
         //res.render('filter', {data : data, userName : UN}); // use this to login
 
         res.render('filter', {data : data});
+
+        
         //res.send("/main");
     }).catch((err) => {
         console.log("errrrrrrrrrrr:" , err);

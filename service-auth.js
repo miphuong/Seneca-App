@@ -27,7 +27,7 @@ module.exports.initialize = () => {
         //let db = mongoose.connect("mongodb://pure_kang:helloworld123@ds133262.mlab.com:33262/pure_seneca", { useNewUrlParser: true });
         console.log("1.2");
         try{
-            let db = mongoose.connect("mongodb+srv://givemeaname:a47DxMn3NUBS@senecaapp.qqfrq.mongodb.net/user?retryWrites=true&w=majority", { useNewUrlParser: true,  useUnifiedTopology: true });
+            let db = mongoose.connect("mongodb+srv://givemeaname:This1sAT3stPassword@senecaapp.qqfrq.mongodb.net/user?retryWrites=true&w=majority", { useNewUrlParser: true,  useUnifiedTopology: true });
             console.log("1.3");
         }catch(err){
             console.log("err", err);

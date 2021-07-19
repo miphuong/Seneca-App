@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize');
+require('dotenv').config();
 
-// Heruo Postgres Connection: fixes oversized cookie error
-var sequelize = new Sequelize('de3mftkc6qma2v','dsqowhaxsbagdl','14edb012ce3db049d134e5b31ccc0da8440c4abbeb2a4c015e582e23476caeae', {
-    host: 'ec2-3-211-37-117.compute-1.amazonaws.com',
+// Heruo Postgres Connection: 
+var sequelize = new Sequelize(process.env.SEQUELIZE_DATABASE,process.env.SEQUELIZE_USERNAME,process.env.SEQUELIZE_PASSWORD, {
+    host: process.env.SEQUELIZE_HOST,
     dialect: 'postgres',
     operatorAliases: false,
     dialectOptions: {

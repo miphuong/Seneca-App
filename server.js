@@ -13,6 +13,7 @@ app.use(express.static('./sub'));
 app.set('view engine', 'jade');
 app.set('views', './sub/jade');
 
+
 // Setup client-sessions
 app.use(clientSessions({
     cookieName: "session", // this is the object name that will be added to 'req'

@@ -24,7 +24,6 @@ let User;
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
         try{
-            //let db = mongoose.connect("mongodb+srv://givemeaname:This1sAT3stPassword@senecaapp.qqfrq.mongodb.net/user?retryWrites=true&w=majority", { useNewUrlParser: true,  useUnifiedTopology: true });
             let connectionString = "mongodb+srv://" + process.env.MONGOOSE_USERNAME + ":" + process.env.MONGOOSE_PASSWORD + "@" + process.env.MONGOOSE_HOST;
             let db = mongoose.connect(connectionString, { useNewUrlParser: true,  useUnifiedTopology: true });
         }catch(err){

@@ -5,29 +5,13 @@ const filterjs = require('./filter.js');
 const dataService = require('./data-service.js');
 const bodyParser = require('body-parser');
 const clientSessions = require('client-sessions');
-const passport = require('passport'); // to use Federation Authentication
-const googleAuth = require('./google-auth.js');
 const serviceAuth = require('./service-auth.js');
-const BearerStrategy = require('passport-http-bearer');
 
-
-googleAuth(passport);
-app.use(passport.initialize());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('./sub'));
 
 app.set('view engine', 'jade');
 app.set('views', './sub/jade');
-
-passport.use(new BearerStrategy(
-    function(token, done) {
-      User.findOne({ token: token }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        return done(null, user, { scope: 'read' });
-      });
-    }
-));
 
 // Setup client-sessions
 app.use(clientSessions({
@@ -49,32 +33,15 @@ app.use((req, res, next) => {
 });
 
 
-//app.use('/main', (req, res) => {
 app.get('/main', (req, res) => {
-    //console.log("this is /main");
-    //res.send("this is main pg");
-    
     dataService.getAll().then((data) => {
-        console.log("dataservice.getall fn");
-
-        // use this to login
-        //res.render('filter', {data : data, userName : UN}); // use this to login
-
         res.render('filter', {data : data});
-
-        
-        //res.send("/main");
     }).catch((err) => {
-        console.log("errrrrrrrrrrr:" , err);
+        console.log(err)
     });
 });
 
-
-//app.use('/courses', require('./routes/courses'));
-
-
 app.post('/filter', (req, res) => {
-    console.log("filter post");
     var filteredArr = 
     [
         {
@@ -135,85 +102,17 @@ app.get('/filter/code/:code', (req, res) => {
     }
 })
 
-// Route
-// app.get('/', (req, res) => {
-//     res.render('login');
-// });
-
 app.get('/', (req, res) => {
     res.redirect('/main');
 });
-
-app.get('/auth/google', 
-    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login']}));
-
-app.get('/auth/google/callback', 
-passport.authenticate('google', { failureRedirect: '/login'}), (req,res) =>{
-    console.log(req.user.token);
-    req.session.token = req.user.token;
-    res.redirect('/main');
-    
-});
-
-app.post('/login', (req, res) => {
-    console.log("login part 1");
-    req.body.userAgent = req.get('User-Agent');
-    console.log("login part 2");
-    serviceAuth.checkUser(req.body)
-    .then((user) => {
-        console.log("login part 2.111111111");
-        req.session.user = {
-            userName: user.userName,
-            email: user.email,
-            loginHistory: user.loginHistory
-        }
-
-        global.UN = req.session.user.userName;
-        
-        res.redirect('/main');
-        //res.redirect('/courses');
-        console.log("username and pw:", user.userName);
-    }).catch((err) => {
-        res.render('login', {errorMessage: err, userName: req.body.userName});
-    });
-    console.log("login part 3");
-});
-
-app.get('/api/me',
-  passport.authenticate('bearer', { session: false }),
-  function(req, res) {
-    res.json(req.user);
-});
-
-app.get('/logout', (req, res) => {
-    req.logout();
-    req.session.reset();
-    res.redirect('/');
-})
-
-app.get('/signup', (req, res) => {
-    res.render('signup');
-})
-
-app.post('/signup', (req, res) => {
-    serviceAuth.registerUser(req.body)
-    .then((value) => {
-        res.render('signup', {successMessage: "User created"});
-    }).catch((err) => {
-        res.render('signup', {errorMessage: err, userName: req.body.userName});
-    })
-});
-
 
 app.get('*', (req, res) => {
     res.status(404).send("Page Not Found");
 })
 
-console.log('1');
 serviceAuth.initialize()
 .then(serviceAuth.initialize)
 .then(()=>{
-    console.log('2');
     app.listen(port, function(){
         console.log("app listening on: " + port)
     });

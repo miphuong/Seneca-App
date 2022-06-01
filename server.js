@@ -5,7 +5,6 @@ const filterjs = require('./filter.js');
 const dataService = require('./data-service.js');
 const bodyParser = require('body-parser');
 const clientSessions = require('client-sessions');
-const serviceAuth = require('./service-auth.js');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('./sub'));
@@ -111,13 +110,7 @@ app.get('*', (req, res) => {
     res.status(404).send("Page Not Found");
 })
 
-serviceAuth.initialize()
-.then(serviceAuth.initialize)
-.then(()=>{
-    app.listen(port, function(){
-        console.log("app listening on: " + port)
-    });
-}).catch((err)=>{
-    console.log("unable to start server: " + err);
-})
-
+app.listen(port, function(err){
+    if (err) console.log("Error in server setup")
+    console.log("Server listening on Port", port);
+});
